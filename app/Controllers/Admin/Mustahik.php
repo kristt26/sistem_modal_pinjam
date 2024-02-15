@@ -4,14 +4,16 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\MustahikModel;
+use App\Models\UserModel;
 
 class Mustahik extends BaseController
 {
 
     protected $mustahik;
-
+    protected $user;
     public function __construct() {
         $this->mustahik = new MustahikModel();
+        $this->user = new UserModel();
     }
 
     public function index()
@@ -27,10 +29,25 @@ class Mustahik extends BaseController
 
     public function post()
     {
+        $conn = \Config\Database::connect();
         $param = $this->request->getJSON();
         try {
-            if($this->mustahik->insert($param)) return $this->respondCreated($this->mustahik->getInsertID());
+            $conn->transBegin();
+            $user = [
+                'username'=>$param->nik,
+                'password'=>password_hash($param->nik, PASSWORD_DEFAULT),
+                'role'=>'Peminjam'
+            ];
+            $this->user->insert($user);
+            $param->user_id = $this->user->getInsertID();
+            $this->mustahik->insert($param);
+            $param->id = $this->mustahik->getInsertID();
+            if($conn->transStatus()){
+                $conn->transCommit();
+                return $this->respondCreated($param);
+            }
         } catch (\Throwable $th) {
+            $conn->transRollback();
             $this->fail($th->getMessage());
         }
     }

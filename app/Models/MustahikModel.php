@@ -12,7 +12,7 @@ class MustahikModel extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nik', 'nama', 'alamat', 'kontak', 'kontak_lain'];
+    protected $allowedFields    = ['nik', 'nama', 'alamat', 'kontak', 'kontak_lain', 'user_id'];
 
     protected bool $allowEmptyInserts = false;
     
