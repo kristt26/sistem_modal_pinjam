@@ -2,7 +2,7 @@
 <?= $this->section('content') ?>
 <div ng-controller="kelengkapanController">
     <div class="row">
-        <div class="col-4 mt-5">
+        <div class="col-md-4 mt-5">
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title">Input Data Kelengkapan</h4>
@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-8 mt-5">
+        <div class="col-md-8 mt-5">
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title">Daftar Kelengkapan</h4>

@@ -6,6 +6,9 @@ class Home extends BaseController
 {
     public function index(): string
     {
-        return view('layout/user/layout');
+        if(session()->get('role')=='Peminjam'){
+            return view('layout/user/layout');
+        }
+        return view('layout/admin/layout');
     }
 }

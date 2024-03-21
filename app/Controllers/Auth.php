@@ -19,7 +19,7 @@ class Auth extends BaseController
     public function index(): string
     {
         if ($this->user->countAllResults() == 0) {
-            $this->user->insert(['username' => 'Administrator', 'password' => password_hash('Administrator#1', PASSWORD_DEFAULT), 'role' => 'Admin']);
+            $this->user->insert(['username' => 'Administrator', 'password' => password_hash('Administrator#1', PASSWORD_DEFAULT), 'role' => 'Ketua']);
         }
         return view('login');
     }
@@ -39,11 +39,11 @@ class Auth extends BaseController
         $q = $this->user->where('username', $data->username)->first();
         if ($q) {
             if (password_verify($data->password, $q->password)) {
-                if($q->role == "Admin"){
-                    session()->set(['uid'=>$q->id,'nama' => 'Administrator', 'role'=>$q->role, 'isRole' => true]);
-                }else{
+                if($q->role == "Peminjam"){
                     $mustahik = $this->mustahik->where('user_id', $q->id)->first();
                     session()->set(['uid'=>$q->id,'nama' => $mustahik->nama, 'role'=>$q->role, 'isRole' => true]);
+                }else{
+                    session()->set(['uid'=>$q->id,'nama' => $q->role, 'role'=>$q->role, 'isRole' => true]);
                 }
                 return $this->respond(true);
             } else return $this->fail("Password salah");
@@ -53,6 +53,6 @@ class Auth extends BaseController
     public function logout()
     {
         session()->destroy();
-        return redirect()->to(base_url());
+        return redirect()->to(base_url('auth'));
     }
 }

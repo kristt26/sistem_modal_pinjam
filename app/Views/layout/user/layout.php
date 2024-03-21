@@ -49,7 +49,7 @@
                             <ul class="notification-area">
                                 <li id="full-view"><i class="ti-fullscreen"></i></li>
                                 <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
-                                <li class="dropdown">
+                                <!-- <li class="dropdown">
                                     <i class="ti-bell dropdown-toggle" data-toggle="dropdown">
                                         <span>2</span>
                                     </i>
@@ -107,7 +107,7 @@
                                             </a>
                                         </div>
                                     </div>
-                                </li>
+                                </li> -->
                                 <!-- <li class="settings-btn">
                                     <i class="ti-settings"></i>
                                 </li> -->
@@ -116,11 +116,11 @@
                         <div class="clearfix d-md-inline-block d-block">
                             <div class="user-profile m-0">
                                 <img class="avatar user-thumb" src="/assets/images/author/avatar.png" alt="avatar">
-                                <h4 class="user-name dropdown-toggle" data-toggle="dropdown">Kumkum Rai <i class="fa fa-angle-down"></i></h4>
+                                <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?= session()->get('nama')?> <i class="fa fa-angle-down"></i></h4>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Message</a>
+                                    <!-- <a class="dropdown-item" href="#">Message</a> -->
                                     <a class="dropdown-item" href="#">Settings</a>
-                                    <a class="dropdown-item" href="#">Log Out</a>
+                                    <a class="dropdown-item" href="auth/logout">Log Out</a>
                                 </div>
                             </div>
                         </div>
@@ -142,7 +142,7 @@
         <!-- footer area start-->
         <footer class="footer">
             <div class="footer-area">
-                <p>© Copyright 2018. All right reserved. Template by <a href="https://colorlib.com/wp/">Colorlib</a>.</p>
+                <p>© Copyright 2024. BMFi</p>
             </div>
         </footer>
         <!-- footer area end-->

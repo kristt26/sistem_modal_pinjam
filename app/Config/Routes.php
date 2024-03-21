@@ -32,6 +32,14 @@ $routes->group('kelengkapan', static function($routes){
     $routes->delete('delete/(:any)', 'Admin\Kelengkapan::delete/$1');
 });
 
+$routes->group('permohonan', static function($routes){
+    $routes->get('/', 'Admin\Permohonan::index');
+    $routes->get('read/(:any)', 'Admin\Permohonan::read/$1');
+    $routes->post('post', 'Admin\Permohonan::post');
+    $routes->put('put', 'Admin\Permohonan::put');
+    $routes->delete('delete/(:any)', 'Admin\Permohonan::delete/$1');
+});
+
 
 // mustahik
 $routes->group('pengajuan', static function($routes){

@@ -1,42 +1,34 @@
 <?php
 
-namespace App\Controllers\User;
+namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\DetailModel;
 use App\Models\KelengkapanModel;
-use App\Models\MustahikModel;
 use App\Models\PermohonanModel;
 
-class Pengajuan extends BaseController
+class Permohonan extends BaseController
 {
 
     protected $kelengkapan;
     protected $permohonan;
-    protected $mustahik;
     protected $detail;
     public function __construct() {
         $this->kelengkapan = new KelengkapanModel();
         $this->permohonan = new PermohonanModel();
-        $this->mustahik = new MustahikModel();
         $this->detail = new DetailModel();
     }
 
     public function index()
     {
-        return view('mustahik/pengajuan');
+        return view('admin/permohonan');
     }
 
-    public function add()
+    public function read($status = null)
     {
-        return view('mustahik/add_pengajuan');
-    }
-
-    public function read()
-    {
-        $data = $this->permohonan->select("permohonan.*")
-        ->join("mustahik", "mustahik.id=permohonan.mustahik_id")
-        ->where('mustahik.user_id', session()->get("uid"))->findAll();
+        $data = $this->permohonan->select("permohonan.*, mustahik.nama, mustahik.nik, mustahik.kontak, mustahik.alamat")
+        ->join('mustahik', 'mustahik.id=permohonan.mustahik_id')
+        ->where('status', $status)->findAll();
         foreach ($data as $key => $value) {
             $value->detail = $this->detail->select("detail.*, kelengkapan.kelengkapan")
             ->join('kelengkapan', 'kelengkapan.id=detail.kelengkapan_id')
@@ -45,38 +37,17 @@ class Pengajuan extends BaseController
         return $this->respond($data);
     }
 
-    public function kelengkapan()
-    {
-        $data = $this->kelengkapan->findAll();
-        return $this->respond($data);
-    }
-
     public function post()
     {
         $conn = \Config\Database::connect();
-        $mustahik = $this->mustahik->where('user_id', session()->get('uid'))->first();
-        $lib = new \App\Libraries\Decode();
         $param = $this->request->getJSON();
         try {
             $conn->transBegin();
-            $itemPengajuan = [
-                'mustahik_id'=>$mustahik->id,
-                'tanggal_pengajuan'=>date("Y-m-d"),
-                'status'=>'Validasi'
-            ];
-            $this->permohonan->insert($itemPengajuan);
-            $permohonan_id = $this->permohonan->getInsertID();
-            foreach ($param as $key => $value) {
-                $itemDetail = [
-                    'permohonan_id'=>$permohonan_id,
-                    'kelengkapan_id'=>$value->id,
-                    'file'=> $lib->decodebase64($value->berkas->base64)
-                ];
-                $this->detail->insert($itemDetail);
-            }
+            $this->kelengkapan->insert($param);
+            $param->id = $this->kelengkapan->getInsertID();
             if($conn->transStatus()){
                 $conn->transCommit();
-                return $this->respondCreated(true);
+                return $this->respondCreated($param);
             }
         } catch (\Throwable $th) {
             $conn->transRollback();
@@ -88,7 +59,7 @@ class Pengajuan extends BaseController
     {
         $param = $this->request->getJSON();
         try {
-            if($this->kelengkapan->update($param->id, $param)) return $this->respondUpdated(true);
+            if($this->permohonan->update($param->id, $param)) return $this->respondUpdated(true);
         } catch (\Throwable $th) {
             $this->fail($th->getMessage());
         }

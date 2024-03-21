@@ -2,6 +2,7 @@ angular.module('user.service', [])
     // admin
     .factory('dashboardServices', dashboardServices)
     .factory('pengajuanServices', pengajuanServices)
+    .factory('permohonanServices', permohonanServices)
     ;
 
 function dashboardServices($http, $q, helperServices, AuthService) {
@@ -167,5 +168,7 @@ function pengajuanServices($http, $q, helperServices, AuthService, pesan) {
     }
 
 }
+
+
 
 

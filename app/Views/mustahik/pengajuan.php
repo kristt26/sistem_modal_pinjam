@@ -15,8 +15,9 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Tanggal Pengajuan</th>
+                                    <th>Berkas</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <!-- <th>Action</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -24,9 +25,13 @@
                                     <td>{{$index+1}}</td>
                                     <td>{{item.tanggal_pengajuan}}</td>
                                     <td>
+                                        <p ng-repeat="berkas in item.detail"><a href="assets/berkas/{{berkas.file}}" target="_blank">{{berkas.kelengkapan}}</a></p>
+                                    </td>
+                                    <td>{{item.status=='Validasi' ? 'Validasi Berkas':item.status=='Survey' ? 'Survey Lokasi' : item.status=='Diterima' ? 'Permohonan Diterima' : 'Pemohonan Ditolak'}}</td>
+                                    <!-- <td>
                                         <button type="button" class="btn btn-warning btn-xs" ng-click="edit(item)"><i class="ti-pencil"></i></button>
                                         <button type="button" class="btn btn-danger btn-xs" ng-click="delete(item)"><i class="ti-trash"></i></button>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             </tbody>
                         </table>

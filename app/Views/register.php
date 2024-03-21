@@ -45,7 +45,7 @@
                         <div class="form-gp">
                             <label for="nik">NIK</label>
                             <input type="text" id="nik" ng-model="model.nik">
-                            <i class="ti-credit-card"></i>
+                            <i class="ti-id-badge"></i>
                             <div class="text-danger"></div>
                         </div>
                         <div class="form-gp">

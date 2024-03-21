@@ -2,6 +2,7 @@ angular.module('userctrl', [])
     // Admin
     .controller('dashboardController', dashboardController)
     .controller('pengajuanController', pengajuanController)
+    .controller('permohonanController', permohonanController)
     ;
 
 function dashboardController($scope, dashboardServices) {
@@ -63,11 +64,13 @@ function pengajuanController($scope, pengajuanServices, helperServices, pesan) {
     }
 
     $scope.save = () => {
-        pesan.dialog('Yakin ingin melanjutkan proses?', "Ya", "Tidak", "info").then(x => {
+        pesan.dialog('Yakin ingin melanjutkan proses?', "Ya", "Tidak", "warning").then(x => {
             $.LoadingOverlay('show');
             pengajuanServices.post($scope.datas).then(res => {
-                $scope.model = {}
                 $.LoadingOverlay('hide');
+                pesan.dialog('Pengajuan berhasil di tambahkan', 'OK', false, 'success').then(x=>{
+                    document.location.href = helperServices.url + "pengajuan";
+                })
             })
         })
     }
@@ -81,3 +84,5 @@ function pengajuanController($scope, pengajuanServices, helperServices, pesan) {
         })
     }
 }
+
+
