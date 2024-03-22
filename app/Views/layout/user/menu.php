@@ -5,10 +5,10 @@
                 <div class="horizontal-menu">
                     <nav>
                         <ul id="nav_menu">
-                            <li ng-class="{'active': header=='beranda'}"><a href="beranda"><i class="ti-dashboard"></i> <span>Beranda</span></a></li>
-                            <li ng-class="{'active': header=='Pengajuan'}"><a href="pengajuan"><i class="ti-file"></i> <span>Permohonan</span></a></li>
-                            <li><a href="info_angsuran"><i class="ti-view-list"></i> <span>Angsuran Aktif</span></a></li>
-                            <li><a href="info_jadwal"><i class="ti-calendar"></i> <span>Jadwal Angsuran</span></a></li>
+                            <li ng-class="{'active': header=='beranda'}"><a href="/beranda"><i class="ti-dashboard"></i> <span>Beranda</span></a></li>
+                            <li ng-class="{'active': header=='Pengajuan'}"><a href="/pengajuan"><i class="ti-file"></i> <span>Permohonan</span></a></li>
+                            <li ng-class="{'active': header=='Angsuran'}"><a href="/angsuran"><i class="ti-calendar"></i> <span>Angsuran Aktif</span></a></li>
+                            <!-- <li><a href="/info_jadwal"><i class="ti-calendar"></i> <span>Jadwal Angsuran</span></a></li> -->
                             <!-- <li>
                                 <a href="javascript:void(0)"><i class="fa fa-table"></i>
                                     <span>Tables</span></a>

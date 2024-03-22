@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
+use App\Libraries\Decode;
 use App\Models\MustahikModel;
 use App\Models\UserModel;
 
@@ -11,9 +12,11 @@ class Mustahik extends BaseController
 
     protected $mustahik;
     protected $user;
+    protected $lib;
     public function __construct() {
         $this->mustahik = new MustahikModel();
         $this->user = new UserModel();
+        $this->lib = new Decode();
     }
 
     public function index()
@@ -40,6 +43,7 @@ class Mustahik extends BaseController
             ];
             $this->user->insert($user);
             $param->user_id = $this->user->getInsertID();
+            $param->nomor = $this->lib->random_strings(8);
             $this->mustahik->insert($param);
             $param->id = $this->mustahik->getInsertID();
             if($conn->transStatus()){

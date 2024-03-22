@@ -309,14 +309,14 @@ function permohonanServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x => x.id == param.id);
-                if (data) {
-                    data.nama = param.nama;
-                    data.nik = param.nik;
-                    data.alamat = param.alamat;
-                    data.kontak = param.kontak;
-                    data.kontak_lain = param.kontak_lain;
-                }
+                // var data = service.data.find(x => x.id == param.id);
+                // if (data) {
+                //     data.nama = param.nama;
+                //     data.nik = param.nik;
+                //     data.alamat = param.alamat;
+                //     data.kontak = param.kontak;
+                //     data.kontak_lain = param.kontak_lain;
+                // }
                 def.resolve(res.data);
             },
             (err) => {

@@ -51,3 +51,11 @@ $routes->group('pengajuan', static function($routes){
     $routes->put('put', 'User\Pengajuan::put');
     $routes->delete('delete/(:any)', 'User\Pengajuan::delete/$1');
 });
+
+$routes->group('angsuran', static function($routes){
+    $routes->get('/', 'User\Angsuran::index');
+    $routes->get('detail/(:any)', 'User\Angsuran::detail/$1');
+    $routes->get('read', 'User\Angsuran::read');
+    $routes->get('jadwal/(:any)', 'User\Angsuran::jadwal/$1');
+    $routes->put('put', 'User\Angsuran::put');
+});

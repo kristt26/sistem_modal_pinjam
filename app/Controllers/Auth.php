@@ -20,6 +20,7 @@ class Auth extends BaseController
     {
         if ($this->user->countAllResults() == 0) {
             $this->user->insert(['username' => 'Administrator', 'password' => password_hash('Administrator#1', PASSWORD_DEFAULT), 'role' => 'Ketua']);
+            $this->user->insert(['username' => 'Staf', 'password' => password_hash('Staf#1', PASSWORD_DEFAULT), 'role' => 'Staf']);
         }
         return view('login');
     }

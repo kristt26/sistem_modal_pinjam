@@ -125,7 +125,7 @@ function permohonanController($scope, permohonanServices, helperServices, pesan)
     $scope.datas = {};
     $scope.title = "Dashboard";
     $.LoadingOverlay('show');
-    permohonanServices.get('Validasi').then(res => {
+    permohonanServices.get('Pengajuan').then(res => {
         $scope.datas = res;
         $.LoadingOverlay('hide');
     })
@@ -134,6 +134,9 @@ function permohonanController($scope, permohonanServices, helperServices, pesan)
         $.LoadingOverlay('show');
         permohonanServices.get(param).then(res => {
             $scope.datas = res;
+            if(param=="Survey"){
+
+            }
             $.LoadingOverlay('hide');
         })
     }
@@ -142,15 +145,27 @@ function permohonanController($scope, permohonanServices, helperServices, pesan)
         $scope.model = angular.copy(param);
     }
 
-    $scope.setuju = (id, param) => {
+    $scope.setuju = (id, param, status, ket) => {
         pesan.dialog('Yakin ingin melanjutkan proses?', "Ya", "Tidak", "warning").then(x => {
             $.LoadingOverlay('show');
             var item = {};
-            item.id = id;
-            item.status = param;
+            item = $scope.rincian(id);
+            item.tahapan = param;
+            if(status)item.status=status;
+            if(ket)item.keterangan=ket;
             permohonanServices.put(item).then(res => {
-                $scope.datas = res;
+                var set = $scope.datas.find(x=>x.id ==id);
+                if(status=='Draf'){
+                    set.status = status
+                    set.keterangan = ket
+                }else{
+                    if(set && param!='Diterima'){
+                        var index = $scope.datas.indexOf(set);
+                        $scope.datas.splice(index,1);
+                    }
+                }
                 $.LoadingOverlay('hide');
+                if(status) $("#kembalikan").modal('hide');
             })
         })
     }
@@ -174,5 +189,32 @@ function permohonanController($scope, permohonanServices, helperServices, pesan)
                 $.LoadingOverlay('hide');
             })
         })
+    }
+
+    $scope.kembalikan = (param)=>{
+        $scope.model = angular.copy(param);
+        console.log($scope.datas);
+        $("#kembalikan").modal('show');
+    }
+
+    $scope.rincian = (id)=>{
+        var item = $scope.datas.find(x=>x.id==id);
+        var nominal = parseFloat(item.nominal);
+        if(item.waktu == '1'){
+            item.rincian = [{tagihan:nominal}]
+        }else if(item.waktu == '2'){
+            item.rincian = [{tagihan:90000}, {tagihan:nominal-90000}]
+            console.log(item.rincian);
+        }else{
+            var lama = parseInt(item.waktu);
+            item.rincian = [{tagihan:90000}];
+            var bayar = (parseFloat(nominal)-90000)/(lama-1);
+            var set = {tagihan:bayar}
+            for (let i = 1; i < lama; i++) {
+                item.rincian.push(set)
+            }
+            console.log(item.rincian);
+        }
+        return item;
     }
 }

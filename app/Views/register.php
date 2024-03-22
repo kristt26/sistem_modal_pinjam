@@ -76,7 +76,7 @@
                             <button id="form_submit" type="submit">Registrasi <i class="ti-arrow-right"></i></button>
                         </div>
                         <div class="form-footer text-center mt-5">
-                            <p class="text-muted">Sudah punya akun? <a href="login">Login</a></p>
+                            <p class="text-muted">Sudah punya akun? <a href="auth">Login</a></p>
                         </div>
                     </div>
                 </form>

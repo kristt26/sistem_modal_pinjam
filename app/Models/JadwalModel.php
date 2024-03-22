@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class PermohonanModel extends Model
+class JadwalModel extends Model
 {
-    protected $table            = 'permohonan';
+    protected $table            = 'jadwal_bayar';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['mustahik_id', 'tanggal_pengajuan', 'tahapan', 'nominal_id', 'keterangan', 'status', 'waktu'];
+    protected $allowedFields    = ['tanggal_jatuh_tempo', 'permohonan_id', 'tagihan', 'tanggal_bayar', 'bayar', 'bukti', 'status'];
 
     protected bool $allowEmptyInserts = false;
     

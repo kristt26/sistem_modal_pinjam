@@ -15,19 +15,25 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Tanggal Pengajuan</th>
+                                    <th>Besar Pinjaman</th>
+                                    <th>Lama Pinjaman</th>
                                     <th>Berkas</th>
+                                    <th>Tahapan</th>
                                     <th>Status</th>
                                     <!-- <th>Action</th> -->
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="item in datas">
+                                <tr ng-repeat="item in datas" ng-class="{'bg-warning': item.status=='Draf', 'bg-info text-white': item.tahapan=='Diterima'}">
                                     <td>{{$index+1}}</td>
                                     <td>{{item.tanggal_pengajuan}}</td>
+                                    <td>{{item.nominal | currency: 'Rp. '}}</td>
+                                    <td>{{item.waktu}} Minggu</td>
                                     <td>
-                                        <p ng-repeat="berkas in item.detail"><a href="assets/berkas/{{berkas.file}}" target="_blank">{{berkas.kelengkapan}}</a></p>
+                                        <p ng-repeat="berkas in item.detail"><a href="assets/berkas/{{berkas.file}}" ng-class="{'text-white': item.tahapan=='Diterima'}" target="_blank">{{berkas.kelengkapan}}</a></p>
                                     </td>
-                                    <td>{{item.status=='Validasi' ? 'Validasi Berkas':item.status=='Survey' ? 'Survey Lokasi' : item.status=='Diterima' ? 'Permohonan Diterima' : 'Pemohonan Ditolak'}}</td>
+                                    <td>{{item.tahapan=='Pengajuan' ? 'Validasi Berkas':item.tahapan=='Validasi' ? 'Survey Lokasi' : item.tahapan=='Survey' ? 'Menunggu Persetujuan' : item.tahapan=='Diterima' ? 'Permohonan Disetujui':'Pemohonan Ditolak'}}</td>
+                                    <td>{{item.status=='Diajukan' ? 'Pengajuan sedang di proses': 'Pengajuan di kembalikan'}}</td>
                                     <!-- <td>
                                         <button type="button" class="btn btn-warning btn-xs" ng-click="edit(item)"><i class="ti-pencil"></i></button>
                                         <button type="button" class="btn btn-danger btn-xs" ng-click="delete(item)"><i class="ti-trash"></i></button>
