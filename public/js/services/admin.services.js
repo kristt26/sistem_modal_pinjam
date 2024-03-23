@@ -4,6 +4,7 @@ angular.module('admin.service', [])
     .factory('mustahikServices', mustahikServices)
     .factory('kelengkapanServices', kelengkapanServices)
     .factory('permohonanServices', permohonanServices)
+    .factory('pembayaranServices', pembayaranServices)
     ;
 
 function dashboardServices($http, $q, helperServices, AuthService) {
@@ -346,6 +347,61 @@ function permohonanServices($http, $q, helperServices, AuthService, pesan) {
         return def.promise;
     }
 
+}
+function pembayaranServices($http, $q, helperServices, AuthService, pesan) {
+    var controller = helperServices.url + 'pembayaran/';
+    var service = {};
+    service.data = [];
+    return {
+        get: get,
+        put: put
+    };
+
+    function get(param) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'read/' + param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+
+    function put(param) {
+        var def = $q.defer();
+        $http({
+            method: 'put',
+            url: controller + 'put',
+            data: param,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                // var data = service.data.find(x => x.id == param.id);
+                // if (data) {
+                //     data.nama = param.nama;
+                //     data.nik = param.nik;
+                //     data.alamat = param.alamat;
+                //     data.kontak = param.kontak;
+                //     data.kontak_lain = param.kontak_lain;
+                // }
+                def.resolve(res.data);
+            },
+            (err) => {
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
 }
 
 

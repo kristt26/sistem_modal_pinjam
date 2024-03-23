@@ -3,6 +3,7 @@
 namespace App\Controllers\User;
 
 use App\Controllers\BaseController;
+use App\Libraries\Decode;
 use App\Models\DetailModel;
 use App\Models\KelengkapanModel;
 use App\Models\MustahikModel;
@@ -17,6 +18,7 @@ class Pengajuan extends BaseController
     protected $mustahik;
     protected $detail;
     protected $nominal;
+    protected $lib;
     public function __construct()
     {
         $this->kelengkapan = new KelengkapanModel();
@@ -24,6 +26,7 @@ class Pengajuan extends BaseController
         $this->mustahik = new MustahikModel();
         $this->detail = new DetailModel();
         $this->nominal = new NominalModel();
+        $this->lib = new Decode();
     }
 
     public function index()
@@ -67,6 +70,7 @@ class Pengajuan extends BaseController
         try {
             $conn->transBegin();
             $itemPengajuan = [
+                'kode' => 'pjm-'.$this->lib->random_strings(6),
                 'mustahik_id' => $mustahik->id,
                 'tanggal_pengajuan' => date("Y-m-d"),
                 'status' => 'Diajukan',

@@ -40,6 +40,12 @@ $routes->group('permohonan', static function($routes){
     $routes->delete('delete/(:any)', 'Admin\Permohonan::delete/$1');
 });
 
+$routes->group('pembayaran', static function($routes){
+    $routes->get('/', 'Admin\Pembayaran::index');
+    $routes->get('read/(:any)', 'Admin\Pembayaran::read/$1');
+    $routes->put('put', 'Admin\Pembayaran::put');
+});
+
 
 // mustahik
 $routes->group('pengajuan', static function($routes){

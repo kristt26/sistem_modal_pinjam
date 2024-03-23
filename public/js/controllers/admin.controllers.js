@@ -4,6 +4,7 @@ angular.module('adminctrl', [])
     .controller('mustahikController', mustahikController)
     .controller('kelengkapanController', kelengkapanController)
     .controller('permohonanController', permohonanController)
+    .controller('pembayaranController', pembayaranController)
     ;
 
 function dashboardController($scope, dashboardServices) {
@@ -216,5 +217,50 @@ function permohonanController($scope, permohonanServices, helperServices, pesan)
             console.log(item.rincian);
         }
         return item;
+    }
+}
+
+function pembayaranController($scope, pembayaranServices, pesan) {
+    $scope.$emit("SendUp", "Pembayaran");
+    $scope.datas = {};
+    $.LoadingOverlay('show');
+    pembayaranServices.get().then(res => {
+        $scope.datas = res;
+        $.LoadingOverlay('hide');
+    })
+
+    $scope.validasi = (param) => {
+        $scope.model = angular.copy(param);
+        $scope.model.tagihan = parseFloat($scope.model.tagihan);
+        $scope.model.bayar = parseFloat($scope.model.bayar);
+        $("#pembayaran").modal('show');
+        console.log(param);
+    }
+
+    $scope.save = (param) => {
+        pesan.dialog('Yakin ingin melanjutkan proses?', "Ya", "Tidak", "info").then(x => {
+            $.LoadingOverlay('show');
+            $scope.model.status = param ? 'Tidak Valid' : 'Valid';
+            $scope.model.notif = 2;
+            pembayaranServices.put($scope.model).then(res => {
+                var item = $scope.datas.find(x=>x.id==$scope.model.id);
+                if(item){
+                    var index = $scope.datas.indexOf(item)
+                    $scope.datas.splice(index,1);
+                    $scope.model = {};
+                    $("#pembayaran").modal('hide');
+                    $.LoadingOverlay('hide');
+                }
+            })
+        })
+    }
+
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin melanjutkan proses?', "Ya", "Tidak").then(x => {
+            $.LoadingOverlay('show');
+            pembayaranServices.deleted(param).then(res => {
+                $.LoadingOverlay('hide');
+            })
+        })
     }
 }

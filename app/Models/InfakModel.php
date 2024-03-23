@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class PermohonanModel extends Model
+class InfakModel extends Model
 {
-    protected $table            = 'permohonan';
+    protected $table            = 'infak';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['kode', 'mustahik_id', 'tanggal_pengajuan', 'tahapan', 'nominal_id', 'keterangan', 'status', 'waktu'];
+    protected $allowedFields    = ['nominal', 'jadwal_bayar_id'];
 
     protected bool $allowEmptyInserts = false;
     

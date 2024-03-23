@@ -7,6 +7,7 @@
                     <li ng-class="{'active': header=='Setting Kelengkapan Berkas'}"><a href="kelengkapan"><i class="ti-view-list"></i><span>Kelengkapan Berkas</span></a></li>
                     <li ng-class="{'active': header=='Mustahik'}"><a href="mustahik"><i class="ti-user"></i><span>Mustahik</span></a></li>
                     <li ng-class="{'active': header=='Daftar Permohonan'}"><a href="permohonan"><i class="ti-bookmark-alt"></i><span>Permohonan</span></a></li>
+                    <li ng-class="{'active': header=='Pembayaran'}"><a href="pembayaran"><i class="ti-money"></i><span>Pembayaran</span></a></li>
                     <li ng-class="{'active': header=='Laporan'}"><a href="permohonan"><i class="ti-files"></i><span>Laporan</span></a></li>
                 <?php endif; ?>
                 <?php if (session()->get('role') == 'Ketua') : ?>

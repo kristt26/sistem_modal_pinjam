@@ -7,7 +7,7 @@ angular.module('apps', [
     'message.service',
     'ngLocale',
     'datatables',
-    // 'cur.$mask',
+    'ui.utils.masks',
     'ui.select2',
     "component"
 
