@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
+$routes->get('/', 'Home::index', ['filter'=>'user']);
 $routes->get('beranda', 'Home::index');
 $routes->get('register', 'Auth::register');
 $routes->group('auth', static function($routes){
@@ -16,7 +16,7 @@ $routes->group('auth', static function($routes){
     $routes->get('logout', 'Auth::logout');
 });
 
-$routes->group('mustahik', static function($routes){
+$routes->group('mustahik', ['filter'=>'auth'], static function($routes){
     $routes->get('/', 'Admin\Mustahik::index');
     $routes->get('read', 'Admin\Mustahik::read');
     $routes->post('post', 'Admin\Mustahik::post');
@@ -24,7 +24,7 @@ $routes->group('mustahik', static function($routes){
     $routes->delete('delete/(:any)', 'Admin\Mustahik::delete/$1');
 });
 
-$routes->group('kelengkapan', static function($routes){
+$routes->group('kelengkapan', ['filter'=>'auth'],static function($routes){
     $routes->get('/', 'Admin\Kelengkapan::index');
     $routes->get('read', 'Admin\Kelengkapan::read');
     $routes->post('post', 'Admin\Kelengkapan::post');
@@ -32,7 +32,7 @@ $routes->group('kelengkapan', static function($routes){
     $routes->delete('delete/(:any)', 'Admin\Kelengkapan::delete/$1');
 });
 
-$routes->group('permohonan', static function($routes){
+$routes->group('permohonan', ['filter'=>'auth'],static function($routes){
     $routes->get('/', 'Admin\Permohonan::index');
     $routes->get('read/(:any)', 'Admin\Permohonan::read/$1');
     $routes->post('post', 'Admin\Permohonan::post');
@@ -40,7 +40,7 @@ $routes->group('permohonan', static function($routes){
     $routes->delete('delete/(:any)', 'Admin\Permohonan::delete/$1');
 });
 
-$routes->group('pembayaran', static function($routes){
+$routes->group('pembayaran', ['filter'=>'auth'],static function($routes){
     $routes->get('/', 'Admin\Pembayaran::index');
     $routes->get('read/(:any)', 'Admin\Pembayaran::read/$1');
     $routes->put('put', 'Admin\Pembayaran::put');
@@ -48,7 +48,7 @@ $routes->group('pembayaran', static function($routes){
 
 
 // mustahik
-$routes->group('pengajuan', static function($routes){
+$routes->group('pengajuan', ['filter'=>'user'],static function($routes){
     $routes->get('/', 'User\Pengajuan::index');
     $routes->get('read', 'User\Pengajuan::read');
     $routes->get('add', 'User\Pengajuan::add');
@@ -58,7 +58,7 @@ $routes->group('pengajuan', static function($routes){
     $routes->delete('delete/(:any)', 'User\Pengajuan::delete/$1');
 });
 
-$routes->group('angsuran', static function($routes){
+$routes->group('angsuran', ['filter'=>'user'],static function($routes){
     $routes->get('/', 'User\Angsuran::index');
     $routes->get('detail/(:any)', 'User\Angsuran::detail/$1');
     $routes->get('read', 'User\Angsuran::read');

@@ -76,7 +76,7 @@ class Permohonan extends BaseController
                 $value->tanggal_jatuh_tempo = "$year_to-$month_from-$day_from";
                 $value->permohonan_id = $param->id;
             }
-            if($param->tahapan='Diterima'){
+            if($param->tahapan=='Diterima'){
                 $param->status="Diterima";
                 $this->jadwal->insertBatch($param->rincian);
             }
