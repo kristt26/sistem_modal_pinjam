@@ -1,12 +1,12 @@
 <!doctype html>
-<html class="no-js" lang="en" ng-app="apps">
+<html class="no-js" lang="en" ng-app="apps" ng-controller="indexController">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>srtdash - SEO Dashboard</title>
+    <title>{{titleHeader}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="/assets/images/icon/favicon.ico">
+    <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/css/themify-icons.css">
@@ -24,7 +24,7 @@
     <script src="/assets/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
-<body class="body-bg" ng-controller="indexController">
+<body class="body-bg">
     <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -41,7 +41,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-3">
                         <div class="logo">
-                            <h3>BMFi</h3>
+                            <a href="index.html"><img src="/assets/images/logo.png" alt="logo"></a>
                         </div>
                     </div>
                     <div class="col-md-9 clearfix text-right">
@@ -116,7 +116,7 @@
                         <div class="clearfix d-md-inline-block d-block">
                             <div class="user-profile m-0">
                                 <img class="avatar user-thumb" src="/assets/images/author/avatar.png" alt="avatar">
-                                <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?= session()->get('nama')?> <i class="fa fa-angle-down"></i></h4>
+                                <h4 class="user-name dropdown-toggle" data-toggle="dropdown"><?= session()->get('nama') ?> <i class="fa fa-angle-down"></i></h4>
                                 <div class="dropdown-menu">
                                     <!-- <a class="dropdown-item" href="#">Message</a> -->
                                     <a class="dropdown-item" href="#">Settings</a>

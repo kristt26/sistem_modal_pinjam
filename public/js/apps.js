@@ -32,7 +32,7 @@ angular.module('apps', [
 
 
 function indexController($scope, helperServices, pesanServices, dashboardServices) {
-    $scope.titleHeader = "Laboratorium Assets";
+    $scope.titleHeader = "Microfinance Provinsi Papua";
     $scope.header = "";
     $scope.breadcrumb = "";
     $scope.title;

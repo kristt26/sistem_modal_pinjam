@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Login - srtdash</title>
+    <title>Microfinance Provinsi Papua</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico">
+    <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/themify-icons.css">
@@ -39,7 +39,7 @@
             <div class="login-box ptb--100">
                 <form ng-submit="login()">
                     <div class="login-form-head">
-                        <h3>Login</h3>
+                        <a href="index.html"><img src="/assets/images/logo.png" alt="logo"></a>
                     </div>
                     <div class="login-form-body">
                         <div class="form-gp">

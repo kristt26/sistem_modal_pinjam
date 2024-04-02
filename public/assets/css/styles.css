@@ -139,8 +139,8 @@
 }
 
 .sidebar-header {
-    padding: 19px 32px 20px;
-    background: #303641;
+    /* padding: 19px 32px 20px; */
+    background: #ffffff;
     border-bottom: 1px solid #343e50;
 }
 .sidebar-menu .logo{
@@ -148,7 +148,7 @@
 }
 .logo a {
     display: inline-block;
-    max-width: 120px;
+    max-width: 218px;
 }
 
 .metismenu >li >a {
@@ -2318,7 +2318,7 @@ table.dataTable thead td {
 
 .login-form-head {
     text-align: center;
-    background: #8655FC;
+    background: #dfdfdf;
     padding: 50px;
 }
 

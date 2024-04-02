@@ -26,11 +26,11 @@
                                     <td ng-class="{'text-primary': item.status=='Valid'}">{{item.tanggal_jatuh_tempo}}</td>
                                     <td ng-class="{'text-primary': item.status=='Valid'}">{{item.tagihan | currency: 'Rp. '}}</td>
                                     <td ng-class="{'text-primary': item.status=='Valid'}">Minggu {{$index+1}}</td>
-                                    <td ng-class="{'text-primary': item.status=='Valid'}">{{item.bayar ? 'Lunas': 'Belum Terbayar'}}</td>
+                                    <td ng-class="{'text-primary': item.status=='Valid'}">{{item.status=='Pengajuan' ? 'Sedang di proses': 'Terbayar'}}</td>
                                     <td ng-class="{'text-primary': item.status=='Valid'}">
                                         <button ng-show="!item.bayar" type="button" class="btn btn-info btn-xs" ng-click="bayar(item)" title="Verifikasi Pembayaran" data-toggle="tooltip" data-placement="top" tooltip><i class="ti-package"></i></button>
                                         <label ng-show="item.status=='Pengajuan'" class="text-warning">Menunggu Verifikasi</label>
-                                        <label ng-show="item.status=='Valid'" class="text-primary">Terbayar</label>
+                                        <label ng-show="item.status=='Valid'" class="text-primary">Valid</label>
                                     </td>
                                 </tr>
                             </tbody>

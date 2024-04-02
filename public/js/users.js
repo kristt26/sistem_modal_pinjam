@@ -32,8 +32,8 @@ angular.module('apps', [
     ;
 
 
-function indexController($scope, helperServices, pesanServices, dashboardServices) {
-    $scope.titleHeader = "BASNAS";
+function indexController($scope, helperServices, dashboardServices) {
+    $scope.titleHeader = "Microfinance Provinsi Papua";
     $scope.header = "";
     $scope.breadcrumb = "";
     $scope.title;
