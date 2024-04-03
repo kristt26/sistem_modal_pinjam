@@ -142,7 +142,7 @@
         <!-- footer area start-->
         <footer class="footer">
             <div class="footer-area">
-                <p>© Copyright 2024. BMFi</p>
+                <p>© Copyright 2024. BAZNAS-BMFi by Oktagon Cendrawasih Solution</p>
             </div>
         </footer>
         <!-- footer area end-->
