@@ -34,6 +34,14 @@ $routes->group('kelengkapan', ['filter'=>'auth'],static function($routes){
     $routes->delete('delete/(:any)', 'Admin\Kelengkapan::delete/$1');
 });
 
+$routes->group('nominal', ['filter'=>'auth'],static function($routes){
+    $routes->get('/', 'Admin\Nominal::index');
+    $routes->get('read', 'Admin\Nominal::read');
+    $routes->post('post', 'Admin\Nominal::post');
+    $routes->put('put', 'Admin\Nominal::put');
+    $routes->delete('delete/(:any)', 'Admin\Nominal::delete/$1');
+});
+
 $routes->group('permohonan', ['filter'=>'auth'],static function($routes){
     $routes->get('/', 'Admin\Permohonan::index');
     $routes->get('read/(:any)', 'Admin\Permohonan::read/$1');

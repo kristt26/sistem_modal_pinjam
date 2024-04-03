@@ -5,6 +5,7 @@ angular.module('adminctrl', [])
     .controller('kelengkapanController', kelengkapanController)
     .controller('permohonanController', permohonanController)
     .controller('pembayaranController', pembayaranController)
+    .controller('nominalController', nominalController)
     ;
 
 function dashboardController($scope, dashboardServices) {
@@ -261,6 +262,48 @@ function pembayaranController($scope, pembayaranServices, pesan) {
         pesan.dialog('Yakin ingin melanjutkan proses?', "Ya", "Tidak").then(x => {
             $.LoadingOverlay('show');
             pembayaranServices.deleted(param).then(res => {
+                $.LoadingOverlay('hide');
+            })
+        })
+    }
+}
+
+function nominalController($scope, nominalServices, pesan) {
+    $scope.$emit("SendUp", "Nominal Pinjaman");
+    $scope.datas = {};
+    $scope.title = "Dashboard";
+    $.LoadingOverlay('show');
+    nominalServices.get().then(res => {
+        $scope.datas = res;
+        console.log(res);
+        $.LoadingOverlay('hide');
+    })
+
+    $scope.edit = (param) => {
+        $scope.model = angular.copy(param);
+    }
+
+    $scope.save = () => {
+        pesan.dialog('Yakin ingin melanjutkan proses?', "Ya", "Tidak", "info").then(x => {
+            $.LoadingOverlay('show');
+            if ($scope.model.id) {
+                nominalServices.put($scope.model).then(res => {
+                    $scope.model = {}
+                    $.LoadingOverlay('hide');
+                })
+            } else {
+                nominalServices.post($scope.model).then(res => {
+                    $scope.model = {}
+                    $.LoadingOverlay('hide');
+                })
+            }
+        })
+    }
+
+    $scope.delete = (param) => {
+        pesan.dialog('Yakin ingin melanjutkan proses?', "Ya", "Tidak").then(x => {
+            $.LoadingOverlay('show');
+            nominalServices.deleted(param).then(res => {
                 $.LoadingOverlay('hide');
             })
         })
