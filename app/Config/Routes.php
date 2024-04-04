@@ -6,7 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index', ['filter'=>'user']);
-$routes->get('beranda', 'Home::index');
+$routes->get('beranda', 'Home::index', ['filter'=>'auth']);
 $routes->get('register', 'Auth::register');
 $routes->get('kirim_pesan', 'Pesan::kirim');
 $routes->group('auth', static function($routes){
