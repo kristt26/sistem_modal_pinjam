@@ -2,7 +2,7 @@
 <?= $this->section('content') ?>
 <div ng-controller="mustahikController">
     <div class="row">
-        <div class="col-3 mt-5">
+        <!-- <div class="col-3 mt-5">
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title">Input Data Mustahik</h4>
@@ -31,8 +31,8 @@
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="col-9 mt-5">
+        </div> -->
+        <div class="col-12 mt-5">
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title">Daftar Mustahik</h4>
@@ -46,7 +46,7 @@
                                     <th>Alamat</th>
                                     <th>No. HP</th>
                                     <th>No. HP Lain</th>
-                                    <th>Action</th>
+                                    <!-- <th>Action</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,10 +57,10 @@
                                     <td>{{item.alamat}}</td>
                                     <td>{{item.kontak}}</td>
                                     <td>{{item.kontak_lain}}</td>
-                                    <td>
+                                    <!-- <td>
                                         <button type="button" class="btn btn-warning btn-xs" ng-click="edit(item)"><i class="ti-pencil"></i></button>
                                         <button type="button" class="btn btn-danger btn-xs" ng-click="delete(item)"><i class="ti-trash"></i></button>
-                                    </td>
+                                    </td> -->
                                 </tr>
                             </tbody>
                         </table>

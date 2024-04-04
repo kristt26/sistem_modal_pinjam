@@ -136,7 +136,7 @@ function permohonanController($scope, permohonanServices, helperServices, pesan)
         $.LoadingOverlay('show');
         permohonanServices.get(param).then(res => {
             $scope.datas = res;
-            if(param=="Survey"){
+            if (param == "Survey") {
 
             }
             $.LoadingOverlay('hide');
@@ -153,22 +153,22 @@ function permohonanController($scope, permohonanServices, helperServices, pesan)
             var item = {};
             item = $scope.rincian(id);
             item.tahapan = param;
-            if(status)item.status=status;
-            if(ket)item.keterangan=ket;
+            if (status) item.status = status;
+            if (ket) item.keterangan = ket;
             permohonanServices.put(item).then(res => {
-                var set = $scope.datas.find(x=>x.id ==id);
-                if(status=='Draf'){
+                var set = $scope.datas.find(x => x.id == id);
+                if (status == 'Draf') {
                     set.status = status
                     set.keterangan = ket
-                }else{
-                    if(set && param!='Diterima'){
+                } else {
+                    if (set && param != 'Diterima') {
                         var index = $scope.datas.indexOf(set);
-                        $scope.datas.splice(index,1);
+                        $scope.datas.splice(index, 1);
                     }
                 }
                 $.LoadingOverlay('hide');
                 pesan.Success("Berhasil");
-                if(status) $("#kembalikan").modal('hide');
+                if (status) $("#kembalikan").modal('hide');
             })
         })
     }
@@ -194,31 +194,24 @@ function permohonanController($scope, permohonanServices, helperServices, pesan)
         })
     }
 
-    $scope.kembalikan = (param)=>{
+    $scope.kembalikan = (param) => {
         $scope.model = angular.copy(param);
         console.log($scope.datas);
         $("#kembalikan").modal('show');
     }
 
-    $scope.rincian = (id)=>{
-        var item = $scope.datas.find(x=>x.id==id);
+    $scope.rincian = (id) => {
+        var item = $scope.datas.find(x => x.id == id);
         var nominal = parseFloat(item.nominal);
-        if(item.waktu == '1'){
-            item.rincian = [{tagihan:nominal, minggu: 1}]
-        }else if(item.waktu == '2'){
-            item.rincian = [{tagihan:90000, minggu: 1}, {tagihan:nominal-90000, minggu: 2}]
-            console.log(item.rincian);
-        }else{
-            var lama = parseInt(item.waktu);
-            item.rincian = [{tagihan:90000, minggu: 1}];
-            var bayar = (parseFloat(nominal)-90000)/(lama-1);
-            var set = {tagihan:bayar}
-            for (let i = 1; i < lama; i++) {
-                set.minggu = i+1;
-                item.rincian.push(angular.copy(set))
-            }
-            console.log(item.rincian);
+        var lama = parseInt(item.waktu);
+        item.rincian = [];
+        var bayar = (parseFloat(nominal)) / (lama);
+        var set = { tagihan: bayar }
+        for (let i = 1; i <= lama; i++) {
+            set.minggu = i + 1;
+            item.rincian.push(angular.copy(set))
         }
+        console.log(item.rincian);
         return item;
     }
 }
@@ -246,10 +239,10 @@ function pembayaranController($scope, pembayaranServices, pesan) {
             $scope.model.status = param ? 'Tidak Valid' : 'Valid';
             $scope.model.notif = 2;
             pembayaranServices.put($scope.model).then(res => {
-                var item = $scope.datas.find(x=>x.id==$scope.model.id);
-                if(item){
+                var item = $scope.datas.find(x => x.id == $scope.model.id);
+                if (item) {
                     var index = $scope.datas.indexOf(item)
-                    $scope.datas.splice(index,1);
+                    $scope.datas.splice(index, 1);
                     $scope.model = {};
                     $("#pembayaran").modal('hide');
                     $.LoadingOverlay('hide');

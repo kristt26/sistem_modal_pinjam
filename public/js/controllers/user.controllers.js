@@ -54,7 +54,7 @@ function pengajuanController($scope, pengajuanServices, helperServices, pesan) {
     $scope.datas = {};
     $scope.title = "Dashboard";
     $.LoadingOverlay('show');
-    
+
     if (helperServices.lastPath == "add") {
         pengajuanServices.kelengkapan().then(res => {
             $scope.datas = res;
@@ -98,23 +98,16 @@ function pengajuanController($scope, pengajuanServices, helperServices, pesan) {
         })
     }
 
-    $scope.rincian = ()=>{
-        var nominal = $scope.datas.nominal.find(x=>x.id==$scope.model.nominal_id);
-        if($scope.model.waktu == '1'){
-            $scope.model.rincian = [{nominal:nominal.nominal}]
-        }else if($scope.model.waktu == '2'){
-            $scope.model.rincian = [{nominal:90000}, {nominal:nominal.nominal-90000}]
-            console.log($scope.model.rincian);
-        }else{
-            var lama = parseInt($scope.model.waktu);
-            $scope.model.rincian = [{nominal:90000}];
-            var bayar = (parseFloat(nominal.nominal)-90000)/(lama-1);
-            var item = {nominal:bayar}
-            for (let i = 1; i < lama; i++) {
-                $scope.model.rincian.push(item)
-            }
-            console.log($scope.model.rincian);
+    $scope.rincian = () => {
+        var nominal = $scope.datas.nominal.find(x => x.id == $scope.model.nominal_id);
+        var lama = parseInt($scope.model.waktu);
+        $scope.model.rincian = [];
+        var bayar = (parseFloat(nominal.nominal)) / (lama);
+        var item = { nominal: bayar }
+        for (let i = 1; i <= lama; i++) {
+            $scope.model.rincian.push(item)
         }
+        console.log($scope.model.rincian);
         $("#rincian").modal('show');
     }
 }
@@ -125,7 +118,7 @@ function angsuranController($scope, angsuranServices, helperServices, pesan) {
     $scope.title = "Dashboard";
     $.LoadingOverlay('show');
     console.log(helperServices.lastPath);
-    
+
     if (helperServices.lastPath == "angsuran") {
         angsuranServices.get().then(res => {
             $scope.datas = res;
@@ -169,18 +162,18 @@ function angsuranController($scope, angsuranServices, helperServices, pesan) {
         })
     }
 
-    $scope.rincian = ()=>{
-        var nominal = $scope.datas.nominal.find(x=>x.id==$scope.model.nominal_id);
-        if($scope.model.waktu == '1'){
-            $scope.model.rincian = [{nominal:nominal.nominal}]
-        }else if($scope.model.waktu == '2'){
-            $scope.model.rincian = [{nominal:90000}, {nominal:nominal.nominal-90000}]
+    $scope.rincian = () => {
+        var nominal = $scope.datas.nominal.find(x => x.id == $scope.model.nominal_id);
+        if ($scope.model.waktu == '1') {
+            $scope.model.rincian = [{ nominal: nominal.nominal }]
+        } else if ($scope.model.waktu == '2') {
+            $scope.model.rincian = [{ nominal: 90000 }, { nominal: nominal.nominal - 90000 }]
             console.log($scope.model.rincian);
-        }else{
+        } else {
             var lama = parseInt($scope.model.waktu);
-            $scope.model.rincian = [{nominal:90000}];
-            var bayar = (parseFloat(nominal.nominal)-90000)/(lama-1);
-            var item = {nominal:bayar}
+            $scope.model.rincian = [{ nominal: 90000 }];
+            var bayar = (parseFloat(nominal.nominal) - 90000) / (lama - 1);
+            var item = { nominal: bayar }
             for (let i = 1; i < lama; i++) {
                 $scope.model.rincian.push(item)
             }
@@ -195,7 +188,7 @@ function infakController($scope, infakServices, helperServices, pesan) {
     $scope.datas = {};
     $scope.title = "Dashboard";
     $.LoadingOverlay('show');
-    infakServices.get().then(res=>{
+    infakServices.get().then(res => {
         $scope.datas = res;
         $scope.total = 0
         $scope.datas.forEach(element => {
