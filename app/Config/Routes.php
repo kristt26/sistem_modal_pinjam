@@ -8,10 +8,12 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index', ['filter'=>'user']);
 $routes->get('beranda', 'Home::index');
 $routes->get('register', 'Auth::register');
+$routes->get('kirim_pesan', 'Pesan::kirim');
 $routes->group('auth', static function($routes){
     $routes->get('/', 'Auth::index');
     $routes->get('read', 'Auth::read');
     $routes->post('login', 'Auth::login');
+    $routes->post('post', 'Auth::post');
     $routes->put('put', 'Auth::put');
     $routes->get('logout', 'Auth::logout');
 });
@@ -64,4 +66,9 @@ $routes->group('angsuran', ['filter'=>'user'],static function($routes){
     $routes->get('read', 'User\Angsuran::read');
     $routes->get('jadwal/(:any)', 'User\Angsuran::jadwal/$1');
     $routes->put('put', 'User\Angsuran::put');
+});
+
+$routes->group('info_infak', ['filter'=>'user'],static function($routes){
+    $routes->get('/', 'User\Infak::index');
+    $routes->get('read', 'User\Infak::read');
 });

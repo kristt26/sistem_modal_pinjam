@@ -14,6 +14,7 @@ angular.module('userctrl', [])
     .controller('dashboardController', dashboardController)
     .controller('pengajuanController', pengajuanController)
     .controller('angsuranController', angsuranController)
+    .controller('infakController', infakController)
     ;
 
 function dashboardController($scope, dashboardServices) {
@@ -187,6 +188,22 @@ function angsuranController($scope, angsuranServices, helperServices, pesan) {
         }
         $("#rincian").modal('show');
     }
+}
+
+function infakController($scope, infakServices, helperServices, pesan) {
+    $scope.$emit("SendUp", "Informasi Infak");
+    $scope.datas = {};
+    $scope.title = "Dashboard";
+    $.LoadingOverlay('show');
+    infakServices.get().then(res=>{
+        $scope.datas = res;
+        $scope.total = 0
+        $scope.datas.forEach(element => {
+            element.tanggal = new Date(element.tanggal_bayar);
+            $scope.total += parseFloat(element.nominal);
+        });
+        $.LoadingOverlay('hide');
+    })
 }
 
 

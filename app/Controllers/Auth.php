@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Libraries\Decode;
 use App\Models\MustahikModel;
 use App\Models\UserModel;
 
@@ -10,10 +11,12 @@ class Auth extends BaseController
 
     protected $user;
     protected $mustahik;
+    protected $lib;
     public function __construct()
     {
         $this->user = new UserModel();
         $this->mustahik = new MustahikModel();
+        $this->lib = new Decode();
     }
 
     public function index(): string
@@ -32,6 +35,28 @@ class Auth extends BaseController
 
     public function post()
     {
+        $conn = \Config\Database::connect();
+        $param = $this->request->getJSON();
+        try {
+            $conn->transBegin();
+            $user = [
+                'username'=>$param->nik,
+                'password'=>password_hash($param->nik, PASSWORD_DEFAULT),
+                'role'=>'Peminjam'
+            ];
+            $this->user->insert($user);
+            $param->user_id = $this->user->getInsertID();
+            $param->nomor = $this->lib->random_strings(8);
+            $this->mustahik->insert($param);
+            $param->id = $this->mustahik->getInsertID();
+            if($conn->transStatus()){
+                $conn->transCommit();
+                return $this->respondCreated($param);
+            }
+        } catch (\Throwable $th) {
+            $conn->transRollback();
+            $this->fail($th->getMessage());
+        }
     }
 
     public function login(): object

@@ -3,6 +3,7 @@ angular.module('user.service', [])
     .factory('dashboardServices', dashboardServices)
     .factory('pengajuanServices', pengajuanServices)
     .factory('angsuranServices', angsuranServices)
+    .factory('infakServices', infakServices)
     ;
 
 function dashboardServices($http, $q, helperServices, AuthService) {
@@ -109,7 +110,7 @@ function pengajuanServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                service.data.push(res.data);
+                // service.data.push(res.data);
                 def.resolve(res.data);
             },
             (err) => {
@@ -286,6 +287,36 @@ function angsuranServices($http, $q, helperServices, AuthService, pesan) {
     }
 
 }
+
+function infakServices($http, $q, helperServices, AuthService, pesan) {
+    var controller = helperServices.url + 'info_infak/';
+    var service = {};
+    service.data = [];
+    return {
+        get: get,
+    };
+
+    function get() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'read',
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+}
+
 
 
 

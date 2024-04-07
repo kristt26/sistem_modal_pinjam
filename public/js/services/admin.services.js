@@ -5,6 +5,7 @@ angular.module('admin.service', [])
     .factory('kelengkapanServices', kelengkapanServices)
     .factory('permohonanServices', permohonanServices)
     .factory('pembayaranServices', pembayaranServices)
+    .factory('pesanServices', pesanServices)
     ;
 
 function dashboardServices($http, $q, helperServices, AuthService) {
@@ -402,6 +403,32 @@ function pembayaranServices($http, $q, helperServices, AuthService, pesan) {
         );
         return def.promise;
     }
+}
+
+function pesanServices($http, $q, helperServices, AuthService, pesan) {
+    var controller = helperServices.url + 'kirim_pesan';
+    return {
+        get: get,
+    };
+
+    function get() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
 }
 
 

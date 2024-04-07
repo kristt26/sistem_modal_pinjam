@@ -15,29 +15,30 @@ angular.module('apps', [
 ])
     .controller('indexController', indexController)
     .directive('emaudio', emaudio)
-    .directive('tooltip', function(){
+    .directive('tooltip', function () {
         return {
             restrict: 'A',
-            link: function(scope, element, attrs){
-                element.hover(function(){
+            link: function (scope, element, attrs) {
+                element.hover(function () {
                     // on mouseenter
                     element.tooltip('show');
-                }, function(){
+                }, function () {
                     // on mouseleave
                     element.tooltip('hide');
                 });
             }
         };
     })
-;
+    ;
 
 
-function indexController($scope, helperServices, dashboardServices) {
-    $scope.titleHeader = "Laboratorium Assets";
+function indexController($scope, helperServices, pesanServices, dashboardServices) {
+    $scope.titleHeader = "BASNAS";
     $scope.header = "";
     $scope.breadcrumb = "";
     $scope.title;
     $scope.warning = 0;
+    
     $scope.$on("SendUp", function (evt, data) {
         $scope.header = data;
         $scope.header = data;

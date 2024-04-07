@@ -166,6 +166,7 @@ function permohonanController($scope, permohonanServices, helperServices, pesan)
                     }
                 }
                 $.LoadingOverlay('hide');
+                pesan.Success("Berhasil");
                 if(status) $("#kembalikan").modal('hide');
             })
         })
@@ -202,17 +203,18 @@ function permohonanController($scope, permohonanServices, helperServices, pesan)
         var item = $scope.datas.find(x=>x.id==id);
         var nominal = parseFloat(item.nominal);
         if(item.waktu == '1'){
-            item.rincian = [{tagihan:nominal}]
+            item.rincian = [{tagihan:nominal, minggu: 1}]
         }else if(item.waktu == '2'){
-            item.rincian = [{tagihan:90000}, {tagihan:nominal-90000}]
+            item.rincian = [{tagihan:90000, minggu: 1}, {tagihan:nominal-90000, minggu: 2}]
             console.log(item.rincian);
         }else{
             var lama = parseInt(item.waktu);
-            item.rincian = [{tagihan:90000}];
+            item.rincian = [{tagihan:90000, minggu: 1}];
             var bayar = (parseFloat(nominal)-90000)/(lama-1);
             var set = {tagihan:bayar}
             for (let i = 1; i < lama; i++) {
-                item.rincian.push(set)
+                set.minggu = i+1;
+                item.rincian.push(angular.copy(set))
             }
             console.log(item.rincian);
         }

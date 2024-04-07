@@ -121,7 +121,7 @@
                 pesan.dialog("Yakin ingin melanjutkan", "Ya", "Tidak", "info").then(x => {
                     $http({
                         method: "post",
-                        url: helperServices.url + "mustahik/post",
+                        url: helperServices.url + "auth/post",
                         data: $scope.model,
                         headers: {
                             'Content-Type': 'application/json'

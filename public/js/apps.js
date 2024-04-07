@@ -31,12 +31,19 @@ angular.module('apps', [
 ;
 
 
-function indexController($scope, helperServices, dashboardServices) {
+function indexController($scope, helperServices, pesanServices, dashboardServices) {
     $scope.titleHeader = "Laboratorium Assets";
     $scope.header = "";
     $scope.breadcrumb = "";
     $scope.title;
     $scope.warning = 0;
+    var pesan = JSON.parse(window.localStorage.getItem('pesan'));
+    if (!pesan) {
+        pesanServices.get().then(res=>{
+            console.log(res);
+            window.localStorage.setItem('pesan', JSON.stringify(res));
+        })
+    }
     $scope.$on("SendUp", function (evt, data) {
         $scope.header = data;
         $scope.header = data;
