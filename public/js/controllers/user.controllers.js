@@ -61,9 +61,16 @@ function pengajuanController($scope, pengajuanServices, helperServices, pesan) {
             $.LoadingOverlay('hide');
             console.log(res);
         })
-    } else {
-        pengajuanServices.get().then(res => {
+    } else if(helperServices.lastPath == "pengajuan"){
+        pengajuanServices.get(helperServices.lastPath).then(res => {
             $scope.datas = res;
+            $.LoadingOverlay('hide');
+        })
+    }else {
+        pengajuanServices.by_id(helperServices.lastPath).then(res => {
+            $scope.datas = res;
+            $scope.model = $scope.datas.permohonan;
+            console.log(res);
             $.LoadingOverlay('hide');
         })
     }
@@ -80,12 +87,21 @@ function pengajuanController($scope, pengajuanServices, helperServices, pesan) {
         pesan.dialog('Yakin ingin melanjutkan proses?', "Ya", "Tidak", "warning").then(x => {
             $.LoadingOverlay('show');
             $scope.model.kelengkapan = $scope.datas.kelengkapan;
-            pengajuanServices.post($scope.model).then(res => {
-                $.LoadingOverlay('hide');
-                pesan.dialog('Pengajuan berhasil di tambahkan', 'OK', false, 'success').then(x => {
-                    document.location.href = helperServices.url + "pengajuan";
+            if($scope.model.id){
+                pengajuanServices.put($scope.model).then(res => {
+                    $.LoadingOverlay('hide');
+                    pesan.dialog('Pengajuan berhasil', 'OK', false, 'success').then(x => {
+                        document.location.href = helperServices.url + "pengajuan";
+                    })
                 })
-            })
+            }else{
+                pengajuanServices.post($scope.model).then(res => {
+                    $.LoadingOverlay('hide');
+                    pesan.dialog('Pengajuan berhasil', 'OK', false, 'success').then(x => {
+                        document.location.href = helperServices.url + "pengajuan";
+                    })
+                })
+            }
         })
     }
 
@@ -183,20 +199,35 @@ function angsuranController($scope, angsuranServices, helperServices, pesan) {
     }
 }
 
-function infakController($scope, infakServices, helperServices, pesan) {
-    $scope.$emit("SendUp", "Informasi Infak");
+function infakController($scope, infakServices, tabunganServices, helperServices, pesan) {
     $scope.datas = {};
-    $scope.title = "Dashboard";
+    
     $.LoadingOverlay('show');
-    infakServices.get().then(res => {
-        $scope.datas = res;
-        $scope.total = 0
-        $scope.datas.forEach(element => {
-            element.tanggal = new Date(element.tanggal_bayar);
-            $scope.total += parseFloat(element.nominal);
-        });
-        $.LoadingOverlay('hide');
-    })
+    if(helperServices.lastPath == "info_infak"){
+        $scope.judul = "Informasi Infak";
+        $scope.$emit("SendUp", $scope.judul);
+        infakServices.get().then(res => {
+            $scope.datas = res;
+            $scope.total = 0
+            $scope.datas.forEach(element => {
+                element.tanggal = new Date(element.tanggal_bayar);
+                $scope.total += parseFloat(element.nominal);
+            });
+            $.LoadingOverlay('hide');
+        })
+    }else{
+        $scope.judul = "Informasi Tabungan";
+        $scope.$emit("SendUp", $scope.judul);
+        tabunganServices.get().then(res => {
+            $scope.datas = res;
+            $scope.total = 0
+            $scope.datas.forEach(element => {
+                element.tanggal = new Date(element.tanggal_bayar);
+                $scope.total += parseFloat(element.nominal);
+            });
+            $.LoadingOverlay('hide');
+        })
+    }
 }
 
 

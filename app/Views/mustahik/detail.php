@@ -26,7 +26,7 @@
                                     <td ng-class="{'text-primary': item.status=='Valid'}">{{item.tanggal_jatuh_tempo}}</td>
                                     <td ng-class="{'text-primary': item.status=='Valid'}">{{item.tagihan | currency: 'Rp. '}}</td>
                                     <td ng-class="{'text-primary': item.status=='Valid'}">Minggu {{$index+1}}</td>
-                                    <td ng-class="{'text-primary': item.status=='Valid'}">{{item.status=='Pengajuan' ? 'Sedang di proses': 'Terbayar'}}</td>
+                                    <td ng-class="{'text-primary': item.status=='Valid'}">{{item.status==null ? 'Belum jatuh tempo' : item.status=='Pengajuan' ? 'Sedang di proses': item.status=='Tidak Valid' ? 'Pembayaran bermasalah': 'Terbayar'}}</td>
                                     <td ng-class="{'text-primary': item.status=='Valid'}">
                                         <button ng-show="!item.bayar" type="button" class="btn btn-info btn-xs" ng-click="bayar(item)" title="Verifikasi Pembayaran" data-toggle="tooltip" data-placement="top" tooltip><i class="ti-package"></i></button>
                                         <label ng-show="item.status=='Pengajuan'" class="text-warning">Menunggu Verifikasi</label>
@@ -66,6 +66,17 @@
                         <div class="form-group">
                             <label for="kelengkapan">Nominal Bayar</label>
                             <input type="text" class="form-control" id="bayar" ng-model="model.bayar" required ui-money-mask='0'>
+                        </div>
+                        <div class="form-group">
+                            <label for="kelengkapan">Kelebihan Dialihkan ke</label><br>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadio4" name="customRadio2" ng-model="model.pengalihan" value="Infak" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio4">Infak</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadio5" name="customRadio2" ng-model="model.pengalihan" value="Tabungan" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio5">Tabungan</label>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label>Upload Bukti Pembayaran</label>

@@ -39,6 +39,27 @@ class Pengajuan extends BaseController
         return view('mustahik/add_pengajuan');
     }
 
+    public function ubah($id)
+    {
+        return view('mustahik/add_pengajuan');
+    }
+
+    public function by_id($id)
+    {
+        $data['kelengkapan'] = $this->kelengkapan->findAll();
+        $data['nominal'] = $this->nominal->findAll();
+        $data['mustahik'] = $this->mustahik->where('user_id', session()->get('uid'))->first();
+        $permohonan = $this->permohonan->select("permohonan.*, mustahik.nama, mustahik.nik, mustahik.kontak, mustahik.alamat, mustahik.nomor, nominal.nominal")
+            ->join('mustahik', 'mustahik.id=permohonan.mustahik_id')
+            ->join('nominal', 'nominal.id=permohonan.nominal_id')
+            ->where('permohonan.id', $id)->first();
+        $permohonan->detail = $this->detail->select("detail.*, kelengkapan.kelengkapan, 'ubah'='0' as edit")
+            ->join('kelengkapan', 'kelengkapan.id=detail.kelengkapan_id')
+            ->where('permohonan_id', $permohonan->id)->findAll();
+        $data['permohonan'] = $permohonan;
+        return $this->respond($data);
+    }
+
     public function read()
     {
         $data = $this->permohonan->select("permohonan.*, mustahik.nama, mustahik.nik, mustahik.kontak, mustahik.alamat, mustahik.nomor, nominal.nominal")
@@ -70,7 +91,7 @@ class Pengajuan extends BaseController
         try {
             $conn->transBegin();
             $itemPengajuan = [
-                'kode' => 'pjm-'.$this->lib->random_strings(6),
+                'kode' => 'pjm-' . $this->lib->random_strings(6),
                 'mustahik_id' => $mustahik->id,
                 'tanggal_pengajuan' => date("Y-m-d"),
                 'status' => 'Diajukan',
@@ -101,10 +122,34 @@ class Pengajuan extends BaseController
 
     public function put()
     {
+        $conn = \Config\Database::connect();
+        $mustahik = $this->mustahik->where('user_id', session()->get('uid'))->first();
+        $lib = new \App\Libraries\Decode();
         $param = $this->request->getJSON();
         try {
-            if ($this->kelengkapan->update($param->id, $param)) return $this->respondUpdated(true);
+            $conn->transBegin();
+            $itemPengajuan = [
+                'tanggal_pengajuan' => date("Y-m-d"),
+                'status' => 'Diajukan',
+                'waktu' => $param->waktu,
+                'nominal_id' => $param->nominal_id,
+            ];
+            $this->permohonan->update($param->id, $itemPengajuan);
+            foreach ($param->detail as $key => $value) {
+                if(isset($value->berkas)){
+                    $itemDetail = [
+                        'file' => $lib->decodebase64($value->berkas->base64)
+                    ];
+                    $this->detail->update($value->id, $itemDetail);
+                }
+            }
+
+            if ($conn->transStatus()) {
+                $conn->transCommit();
+                return $this->respondCreated(true);
+            }
         } catch (\Throwable $th) {
+            $conn->transRollback();
             $this->fail($th->getMessage());
         }
     }

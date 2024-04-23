@@ -62,6 +62,8 @@ $routes->group('pengajuan', ['filter'=>'user'],static function($routes){
     $routes->get('/', 'User\Pengajuan::index');
     $routes->get('read', 'User\Pengajuan::read');
     $routes->get('add', 'User\Pengajuan::add');
+    $routes->get('ubah/(:any)', 'User\Pengajuan::ubah/$1');
+    $routes->get('by_id/(:any)', 'User\Pengajuan::by_id/$1');
     $routes->get('kelengkapan', 'User\Pengajuan::kelengkapan');
     $routes->post('post', 'User\Pengajuan::post');
     $routes->put('put', 'User\Pengajuan::put');
@@ -79,4 +81,9 @@ $routes->group('angsuran', ['filter'=>'user'],static function($routes){
 $routes->group('info_infak', ['filter'=>'user'],static function($routes){
     $routes->get('/', 'User\Infak::index');
     $routes->get('read', 'User\Infak::read');
+});
+
+$routes->group('info_tabungan', ['filter'=>'user'],static function($routes){
+    $routes->get('/', 'User\Tabungan::index');
+    $routes->get('read', 'User\Tabungan::read');
 });

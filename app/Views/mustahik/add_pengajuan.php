@@ -54,11 +54,20 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-6" ng-repeat="item in datas.kelengkapan">
+                                <div class="col-md-6" ng-if="!model.id" ng-repeat="item in datas.kelengkapan">
                                     <div class="form-group">
                                         <label for="kelengkapan{{$index+1}}">{{item.kelengkapan}}</label>
                                         <input type="file" class="form-control form-control-sm" name="kelengkapan{{$index+1}}" id="kelengkapan{{$index+1}}" accept="image/*, application/pdf" base-sixty-four-input ng-model="item.berkas" maxsize="300" required>
                                         <span ng-show="form.kelengkapan{{$index+1}}.$error.maxsize" style="color: red;">Maximum file 300 KB</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" ng-if="model.id" ng-repeat="item in model.detail">
+                                    <div class="form-group">
+                                        <label for="kelengkapan{{$index+1}}">{{item.kelengkapan}}</label>
+                                        <input type="file" class="form-control form-control-sm" name="kelengkapan{{$index+1}}" id="kelengkapan{{$index+1}}" accept="image/*, application/pdf" base-sixty-four-input ng-model="item.berkas" maxsize="300">
+                                        <span ng-show="form.kelengkapan{{$index+1}}.$error.maxsize" style="color: red;">Maximum file 300 KB</span>
+                                        <a ng-if="!item.berkas" href="/assets/berkas/{{item.file}}" target="_blank">{{item.file}}</a>
+                                        <!-- <span>{{item.file}}</span> -->
                                     </div>
                                 </div>
                             </div>

@@ -20,7 +20,7 @@
                                     <th>Berkas</th>
                                     <th>Tahapan</th>
                                     <th>Status</th>
-                                    <!-- <th>Action</th> -->
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,11 +33,10 @@
                                         <p ng-repeat="berkas in item.detail"><a href="assets/berkas/{{berkas.file}}" ng-class="{'text-white': item.tahapan=='Diterima'}" target="_blank">{{berkas.kelengkapan}}</a></p>
                                     </td>
                                     <td>{{item.tahapan=='Pengajuan' ? 'Validasi Berkas':item.tahapan=='Validasi' ? 'Survey Lokasi' : item.tahapan=='Survey' ? 'Menunggu Persetujuan' : item.tahapan=='Diterima' ? 'Permohonan Disetujui':'Pemohonan Ditolak'}}</td>
-                                    <td>{{item.status=='Diajukan' ? 'Pengajuan sedang di proses': item.status=='Diterima' ? 'Diterima' : 'Pengajuan di kembalikan'}}</td>
-                                    <!-- <td>
-                                        <button type="button" class="btn btn-warning btn-xs" ng-click="edit(item)"><i class="ti-pencil"></i></button>
-                                        <button type="button" class="btn btn-danger btn-xs" ng-click="delete(item)"><i class="ti-trash"></i></button>
-                                    </td> -->
+                                    <td>{{item.status=='Diajukan' ? 'Pengajuan sedang di proses': item.status=='Diterima' ? 'Diterima' : ('Pengajuan di kembalikan: ' + item.keterangan)}}</td>
+                                    <td>
+                                        <a href="/pengajuan/ubah/{{item.id}}" ng-if="item.status=='Draf'" type="button" class="btn btn-secondary btn-xs" ng-click="edit(item)"><i class="ti-pencil"></i></a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

@@ -4,6 +4,7 @@ angular.module('user.service', [])
     .factory('pengajuanServices', pengajuanServices)
     .factory('angsuranServices', angsuranServices)
     .factory('infakServices', infakServices)
+    .factory('tabunganServices', tabunganServices)
     ;
 
 function dashboardServices($http, $q, helperServices, AuthService) {
@@ -60,6 +61,7 @@ function pengajuanServices($http, $q, helperServices, AuthService, pesan) {
         post: post,
         put: put,
         deleted: deleted,
+        by_id: by_id,
         kelengkapan: kelengkapan
     };
 
@@ -72,6 +74,24 @@ function pengajuanServices($http, $q, helperServices, AuthService, pesan) {
         }).then(
             (res) => {
                 service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+    function by_id(id) {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'by_id/' + id,
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
                 def.resolve(res.data);
             },
             (err) => {
@@ -131,14 +151,14 @@ function pengajuanServices($http, $q, helperServices, AuthService, pesan) {
             headers: AuthService.getHeader()
         }).then(
             (res) => {
-                var data = service.data.find(x => x.id == param.id);
-                if (data) {
-                    data.nama = param.nama;
-                    data.nik = param.nik;
-                    data.alamat = param.alamat;
-                    data.kontak = param.kontak;
-                    data.kontak_lain = param.kontak_lain;
-                }
+                // var data = service.data.find(x => x.id == param.id);
+                // if (data) {
+                //     data.nama = param.nama;
+                //     data.nik = param.nik;
+                //     data.alamat = param.alamat;
+                //     data.kontak = param.kontak;
+                //     data.kontak_lain = param.kontak_lain;
+                // }
                 def.resolve(res.data);
             },
             (err) => {
@@ -290,6 +310,35 @@ function angsuranServices($http, $q, helperServices, AuthService, pesan) {
 
 function infakServices($http, $q, helperServices, AuthService, pesan) {
     var controller = helperServices.url + 'info_infak/';
+    var service = {};
+    service.data = [];
+    return {
+        get: get,
+    };
+
+    function get() {
+        var def = $q.defer();
+        $http({
+            method: 'get',
+            url: controller + 'read',
+            headers: AuthService.getHeader()
+        }).then(
+            (res) => {
+                service.data = res.data;
+                def.resolve(res.data);
+            },
+            (err) => {
+                pesan.error(err.data.message);
+                def.reject(err);
+            }
+        );
+        return def.promise;
+    }
+
+}
+
+function tabunganServices($http, $q, helperServices, AuthService, pesan) {
+    var controller = helperServices.url + 'info_tabungan/';
     var service = {};
     service.data = [];
     return {

@@ -105,7 +105,7 @@
                         <div class="form-group">
                             <label>Dibayar</label>
                             <input type="text" class="form-control" ng-model="model.bayar" ui-money-mask='0'>
-                            <span ng-show="model.bayar>model.tagihan" class="text-info">Kelebihan {{model.bayar-model.tagihan | currency: 'Rp. '}} akan dialihkan untuk infak/sedekah</span>
+                            <span ng-show="model.bayar>model.tagihan" class="text-info">Kelebihan {{model.bayar-model.tagihan | currency: 'Rp. '}} akan dialihkan untuk {{model.pengalihan == 'Infak' ? 'infak/sedekah' : 'Tabungan' }}</span>
                             <span ng-show="model.bayar<model.tagihan" class="text-danger">Jumlah yang dibayar tidak sesuai</span>
                         </div>
                         <div class="form-group">

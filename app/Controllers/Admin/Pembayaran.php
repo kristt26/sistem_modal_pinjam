@@ -5,15 +5,18 @@ namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
 use App\Models\InfakModel;
 use App\Models\JadwalModel;
+use App\Models\TabunganModel;
 
 class Pembayaran extends BaseController
 {
 
     protected $jadwal;
     protected $infak;
+    protected $tabungan;
     public function __construct() {
         $this->jadwal = new JadwalModel();
         $this->infak = new InfakModel();
+        $this->tabungan = new TabunganModel();
     }
 
     public function index()
@@ -54,9 +57,10 @@ class Pembayaran extends BaseController
         $param = $this->request->getJSON();
         try {
             $conn->transBegin();
-            if($param->bayar>$param->tagihan){
+            if($param->bayar > $param->tagihan){
                 $infak = ['nominal'=>$param->bayar-$param->tagihan, 'jadwal_bayar_id'=>$param->id];
-                $this->infak->insert($infak);
+                if($param->pengalihan == 'Infak') $this->infak->insert($infak);
+                else $this->tabungan->insert($infak);
                 $param->bayar = $param->bayar - $infak['nominal'];
             }
             $this->jadwal->update($param->id, $param);
