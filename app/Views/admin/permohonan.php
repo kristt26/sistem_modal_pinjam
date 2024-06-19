@@ -44,7 +44,7 @@
                                             <td>{{item.nik}}</td>
                                             <td>{{item.kontak}}</td>
                                             <td>
-                                                <p ng-repeat="berkas in item.detail"><a href="assets/berkas/{{berkas.file}}" target="_blank">{{berkas.kelengkapan}}</a></p>
+                                                <p ng-repeat="berkas in item.detail"><a href="assets/berkas/{{berkas.file}}" target="_blank">{{berkas.persyaratan}}</a></p>
                                             </td>
                                             <td>{{item.nominal | currency: 'Rp. '}}</td>
                                             <td>{{item.waktu}} Minggu</td>
